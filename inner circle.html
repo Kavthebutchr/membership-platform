@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Inner Circle — Membership Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --syne:'Syne',sans-serif;
+  --dm:'DM Sans',sans-serif;
+  --ink:#0D0D0D;
+  --ink2:#3A3A3A;
+  --ink3:#7A7A7A;
+  --sand:#F5F2EC;
+  --sand2:#EDE9E0;
+  --white:#FFFFFF;
+  --accent:#C8A96E;
+  --accent2:#1A1A2E;
+  --success:#2D6A4F;
+  --r8:8px;
+  --r12:12px;
+  --r16:16px;
+  --r24:24px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--dm);background:var(--sand);color:var(--ink);overflow-x:hidden;}
+
+.screen{display:none;flex-direction:column;min-height:100vh;animation:fadeIn 0.3s ease;}
+.screen.active{display:flex;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+nav{background:var(--white);border-bottom:1px solid var(--sand2);padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-logo{font-family:var(--syne);font-weight:800;font-size:18px;letter-spacing:-0.5px;color:var(--ink);}
+.nav-logo span{color:var(--accent);}
+.nav-actions{display:flex;gap:8px;}
+.btn-ghost{background:none;border:1px solid var(--sand2);color:var(--ink);font-family:var(--dm);font-size:13px;font-weight:500;padding:6px 14px;border-radius:var(--r8);cursor:pointer;transition:all 0.15s;}
+.btn-ghost:hover{background:var(--sand);}
+.btn-primary{background:var(--ink);color:var(--white);font-family:var(--dm);font-size:13px;font-weight:500;padding:6px 16px;border:none;border-radius:var(--r8);cursor:pointer;transition:all 0.15s;}
+.btn-primary:hover{background:var(--ink2);}
+.btn-accent{background:var(--accent);color:var(--white);font-family:var(--dm);font-size:13px;font-weight:600;padding:6px 16px;border:none;border-radius:var(--r8);cursor:pointer;transition:all 0.15s;}
+
+.hero{padding:60px 20px 48px;text-align:center;max-width:600px;margin:0 auto;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--white);border:1px solid var(--sand2);padding:5px 12px;border-radius:40px;font-size:12px;color:var(--ink3);margin-bottom:24px;}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);}
+.hero h1{font-family:var(--syne);font-weight:800;font-size:clamp(32px,7vw,52px);line-height:1.05;letter-spacing:-1.5px;color:var(--ink);margin-bottom:16px;}
+.hero h1 em{color:var(--accent);font-style:normal;}
+.hero p{font-size:16px;color:var(--ink3);line-height:1.65;margin-bottom:32px;font-weight:300;}
+.hero-cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.btn-hero{background:var(--ink);color:var(--white);font-family:var(--syne);font-weight:600;font-size:15px;padding:13px 28px;border:none;border-radius:var(--r12);cursor:pointer;transition:all 0.2s;}
+.btn-hero:hover{background:var(--accent2);}
+.btn-hero-outline{background:transparent;color:var(--ink);font-family:var(--syne);font-weight:600;font-size:15px;padding:13px 28px;border:1.5px solid var(--sand2);border-radius:var(--r12);cursor:pointer;transition:all 0.2s;}
+.btn-hero-outline:hover{border-color:var(--ink);background:var(--white);}
+
+.proof{display:flex;justify-content:center;gap:24px;padding:24px 20px;border-top:1px solid var(--sand2);border-bottom:1px solid var(--sand2);margin:0 20px;flex-wrap:wrap;}
+.proof-item{text-align:center;}
+.proof-num{font-family:var(--syne);font-weight:700;font-size:22px;color:var(--ink);}
+.proof-label{font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px;}
+
+.section{padding:48px 20px;max-width:640px;margin:0 auto;width:100%;}
+.section-tag{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.section-title{font-family:var(--syne);font-weight:700;font-size:clamp(22px,5vw,32px);letter-spacing:-0.5px;color:var(--ink);margin-bottom:24px;line-height:1.2;}
+.features-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.feature-card{background:var(--white);border:1px solid var(--sand2);border-radius:var(--r16);padding:18px;transition:border-color 0.2s;}
+.feature-card:hover{border-color:var(--accent);}
+.feature-icon{width:36px;height:36px;border-radius:var(--r8);background:var(--sand);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px;}
+.feature-title{font-family:var(--syne);font-weight:600;font-size:14px;color:var(--ink);margin-bottom:4px;}
+.feature-desc{font-size:12px;color:var(--ink3);line-height:1.5;}
+
+.pricing-grid{display:flex;flex-direction:column;gap:12px;}
+.price-card{background:var(--white);border:1.5px solid var(--sand2);border-radius:var(--r16);padding:22px;position:relative;transition:all 0.2s;}
+.price-card.featured{border-color:var(--ink);background:var(--ink);color:var(--white);}
+.price-card.featured .price-name{color:rgba(255,255,255,0.6);}
+.price-card.featured .price-amount{color:var(--white);}
+.price-card.featured .price-period{color:rgba(255,255,255,0.5);}
+.price-card.featured .price-feature{color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.1);}
+.price-card.featured .price-check{color:var(--accent);}
+.popular-badge{position:absolute;top:-10px;right:18px;background:var(--accent);color:var(--white);font-size:10px;font-weight:700;letter-spacing:0.5px;padding:3px 10px;border-radius:20px;text-transform:uppercase;}
+.price-name{font-size:12px;font-weight:500;letter-spacing:0.5px;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;}
+.price-amount{font-family:var(--syne);font-weight:800;font-size:34px;letter-spacing:-1px;color:var(--ink);display:flex;align-items:baseline;gap:2px;}
+.price-period{font-size:13px;font-weight:400;color:var(--ink3);}
+.price-divider{height:1px;background:var(--sand2);margin:16px 0;}
+.price-card.featured .price-divider{background:rgba(255,255,255,0.1);}
+.price-features{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+.price-feature{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink2);}
+.price-check{color:var(--success);font-size:14px;}
+.btn-plan{width:100%;padding:11px;font-family:var(--syne);font-weight:600;font-size:14px;border-radius:var(--r8);cursor:pointer;transition:all 0.15s;border:1.5px solid var(--sand2);background:var(--sand);color:var(--ink);}
+.btn-plan:hover{background:var(--ink);color:var(--white);border-color:var(--ink);}
+.price-card.featured .btn-plan{background:var(--accent);border-color:var(--accent);color:var(--white);}
+.price-card.featured .btn-plan:hover{background:#b8955a;}
+
+.video-embed{background:var(--white);border:1px solid var(--sand2);border-radius:var(--r16);overflow:hidden;margin-bottom:16px;}
+.video-thumb{position:relative;padding-bottom:56.25%;background:#0D0D0D;cursor:pointer;}
+.video-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;background:rgba(200,169,110,0.95);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.video-play-tri{width:0;height:0;border-top:11px solid transparent;border-bottom:11px solid transparent;border-left:18px solid white;margin-left:4px;}
+.video-label{padding:14px 16px;border-top:1px solid var(--sand2);}
+.video-label p{font-weight:500;font-size:14px;color:var(--ink);}
+.video-label span{font-size:12px;color:var(--ink3);}
+
+.discord-card{background:linear-gradient(135deg,#5865F2 0%,#404EED 100%);border-radius:var(--r16);padding:22px;color:white;margin-bottom:16px;}
+.discord-title{font-family:var(--syne);font-weight:700;font-size:18px;margin-bottom:6px;}
+.discord-desc{font-size:13px;opacity:0.8;line-height:1.5;margin-bottom:16px;}
+.btn-discord{background:white;color:#5865F2;font-family:var(--syne);font-weight:700;font-size:13px;padding:10px 20px;border:none;border-radius:var(--r8);cursor:pointer;}
+
+.dash-header{background:var(--white);padding:20px;border-bottom:1px solid var(--sand2);}
+.dash-greeting{font-family:var(--syne);font-weight:700;font-size:20px;color:var(--ink);}
+.dash-sub{font-size:13px;color:var(--ink3);margin-top:2px;}
+.badge-tier{display:inline-flex;align-items:center;gap:5px;background:var(--ink);color:var(--accent);font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:0.5px;margin-top:8px;}
+.dash-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 20px;}
+.stat-card{background:var(--white);border:1px solid var(--sand2);border-radius:var(--r12);padding:14px;}
+.stat-val{font-family:var(--syne);font-weight:700;font-size:22px;color:var(--ink);}
+.stat-label{font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px;}
+.dash-section-title{font-family:var(--syne);font-weight:600;font-size:15px;color:var(--ink);padding:0 20px 10px;}
+.content-list{padding:0 20px;display:flex;flex-direction:column;gap:10px;}
+.content-item{background:var(--white);border:1px solid var(--sand2);border-radius:var(--r12);padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:border-color 0.15s;}
+.content-item:hover{border-color:var(--accent);}
+.content-thumb{width:44px;height:44px;border-radius:var(--r8);background:var(--sand);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.content-title{font-weight:500;font-size:14px;color:var(--ink);}
+.content-meta{font-size:11px;color:var(--ink3);margin-top:2px;}
+.content-item.locked{opacity:0.65;}
+.bottom-nav{background:var(--white);border-top:1px solid var(--sand2);padding:8px 0;display:flex;position:sticky;bottom:0;}
+.nav-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px;cursor:pointer;transition:color 0.15s;color:var(--ink3);border:none;background:none;font-family:var(--dm);}
+.nav-tab.active{color:var(--ink);}
+.nav-tab-icon{font-size:20px;}
+.nav-tab-label{font-size:10px;font-weight:500;}
+
+.auth-wrap{flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 24px;max-width:420px;margin:0 auto;width:100%;}
+.auth-logo{font-family:var(--syne);font-weight:800;font-size:22px;color:var(--ink);margin-bottom:6px;}
+.auth-logo span{color:var(--accent);}
+.auth-title{font-family:var(--syne);font-weight:700;font-size:24px;color:var(--ink);margin-bottom:4px;}
+.auth-sub{font-size:14px;color:var(--ink3);margin-bottom:28px;}
+.form-group{margin-bottom:14px;}
+.form-label{font-size:12px;font-weight:500;color:var(--ink2);margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:0.3px;}
+.form-input{width:100%;padding:11px 14px;border:1.5px solid var(--sand2);border-radius:var(--r8);font-family:var(--dm);font-size:14px;color:var(--ink);background:var(--white);outline:none;transition:border-color 0.15s;}
+.form-input:focus{border-color:var(--ink);}
+.btn-submit{width:100%;padding:13px;background:var(--ink);color:var(--white);font-family:var(--syne);font-weight:700;font-size:15px;border:none;border-radius:var(--r12);cursor:pointer;margin-top:6px;transition:all 0.2s;}
+.btn-submit:hover{background:var(--accent);}
+.auth-switch{text-align:center;font-size:13px;color:var(--ink3);margin-top:18px;}
+.auth-link{color:var(--ink);font-weight:500;text-decoration:underline;cursor:pointer;}
+.divider{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--ink3);font-size:12px;}
+.divider:before,.divider:after{content:'';flex:1;height:1px;background:var(--sand2);}
+.social-btn{width:100%;padding:11px;border:1.5px solid var(--sand2);border-radius:var(--r8);background:var(--white);font-family:var(--dm);font-size:14px;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;transition:all 0.15s;}
+.social-btn:hover{border-color:var(--ink);background:var(--sand);}
+
+.checkout-card{background:var(--white);border:1px solid var(--sand2);border-radius:var(--r16);padding:20px;margin-bottom:14px;}
+.checkout-plan-name{font-family:var(--syne);font-weight:700;font-size:18px;color:var(--ink);}
+.checkout-price{font-family:var(--syne);font-weight:800;font-size:28px;color:var(--accent);margin:4px 0;}
+.checkout-perks{display:flex;flex-direction:column;gap:6px;margin-top:12px;}
+.checkout-perk{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink2);}
+.stripe-badge{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink3);justify-content:center;margin-top:8px;}
+.card-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+/* Portfolio banner */
+.portfolio-banner{background:var(--accent2);color:white;text-align:center;padding:10px 20px;font-size:12px;font-family:var(--dm);}
+.portfolio-banner a{color:var(--accent);font-weight:600;text-decoration:none;}
+</style>
+</head>
+<body>
+
+<!-- Portfolio notice -->
+<div class="portfolio-banner">
+  🎨 UI/UX Prototype — Membership Platform by <a href="https://upwork.com" target="_blank">Your Name</a> · Built with HTML, CSS, JavaScript
+</div>
+
+<!-- LANDING PAGE -->
+<div id="screen-landing" class="screen active">
+  <nav>
+    <div class="nav-logo">inner<span>circle</span></div>
+    <div class="nav-actions">
+      <button class="btn-ghost" onclick="showScreen('screen-login')">Log in</button>
+      <button class="btn-primary" onclick="showScreen('screen-signup')">Join free</button>
+    </div>
+  </nav>
+  <div class="hero">
+    <div class="hero-badge"><div class="hero-badge-dot"></div>Now open to new members</div>
+    <h1>Grow faster with <em>exclusive</em> access</h1>
+    <p>Premium education, a private community, and tools that actually move the needle — all in one place.</p>
+    <div class="hero-cta">
+      <button class="btn-hero" onclick="showScreen('screen-signup')">Start for free</button>
+      <button class="btn-hero-outline" onclick="showScreen('screen-pricing')">See plans</button>
+    </div>
+  </div>
+  <div class="proof">
+    <div class="proof-item"><div class="proof-num">12,400+</div><div class="proof-label">Members</div></div>
+    <div class="proof-item"><div class="proof-num">340+</div><div class="proof-label">Lessons</div></div>
+    <div class="proof-item"><div class="proof-num">4.9★</div><div class="proof-label">Rating</div></div>
+  </div>
+  <div class="section">
+    <div class="section-tag">What you get</div>
+    <div class="section-title">Everything in one membership</div>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon">🎬</div><div class="feature-title">Video Library</div><div class="feature-desc">Hundreds of in-depth lessons, always available</div></div>
+      <div class="feature-card"><div class="feature-icon">💬</div><div class="feature-title">Discord Access</div><div class="feature-desc">Private community of serious members</div></div>
+      <div class="feature-card"><div class="feature-icon">🗂️</div><div class="feature-title">Resources</div><div class="feature-desc">Templates, guides, and frameworks</div></div>
+      <div class="feature-card"><div class="feature-icon">🚀</div><div class="feature-title">Live Sessions</div><div class="feature-desc">Monthly calls with Q&A (Pro+)</div></div>
+    </div>
+  </div>
+  <div style="padding:0 20px 48px;max-width:640px;margin:0 auto;width:100%;">
+    <div class="video-embed">
+      <div class="video-thumb">
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+          <div class="video-play"><div class="video-play-tri"></div></div>
+          <p style="color:rgba(255,255,255,0.5);font-size:12px;">Watch intro video — 3 min</p>
+        </div>
+      </div>
+      <div class="video-label"><p>Welcome to Inner Circle</p><span>Overview · 3 min</span></div>
+    </div>
+    <div class="discord-card">
+      <div style="font-size:24px;margin-bottom:12px;">💬</div>
+      <div class="discord-title">Join the Discord community</div>
+      <div class="discord-desc">Connect with 12,000+ members, get feedback on your work, and stay accountable with daily check-ins.</div>
+      <button class="btn-discord">Join community →</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING PAGE -->
+<div id="screen-pricing" class="screen">
+  <nav>
+    <div class="nav-logo">inner<span>circle</span></div>
+    <div class="nav-actions">
+      <button class="btn-ghost" onclick="showScreen('screen-landing')">← Back</button>
+      <button class="btn-primary" onclick="showScreen('screen-signup')">Get started</button>
+    </div>
+  </nav>
+  <div class="section">
+    <div class="section-tag">Pricing</div>
+    <div class="section-title">Choose your plan</div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Free</div>
+        <div class="price-amount"><span>$0</span><span class="price-period">/month</span></div>
+        <div class="price-divider"></div>
+        <div class="price-features">
+          <div class="price-feature"><span class="price-check">✓</span>5 intro lessons</div>
+          <div class="price-feature"><span class="price-check">✓</span>Community read access</div>
+          <div class="price-feature"><span class="price-check">✓</span>Weekly newsletter</div>
+        </div>
+        <button class="btn-plan" onclick="showScreen('screen-signup')">Start free</button>
+      </div>
+      <div class="price-card featured">
+        <div class="popular-badge">Most popular</div>
+        <div class="price-name">Pro</div>
+        <div class="price-amount"><span>$29</span><span class="price-period">/month</span></div>
+        <div class="price-divider"></div>
+        <div class="price-features">
+          <div class="price-feature"><span class="price-check">✓</span>All 340+ lessons</div>
+          <div class="price-feature"><span class="price-check">✓</span>Full Discord access</div>
+          <div class="price-feature"><span class="price-check">✓</span>Templates & resources</div>
+          <div class="price-feature"><span class="price-check">✓</span>Monthly live sessions</div>
+        </div>
+        <button class="btn-plan" onclick="showScreen('screen-checkout')">Start Pro →</button>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Elite</div>
+        <div class="price-amount"><span>$79</span><span class="price-period">/month</span></div>
+        <div class="price-divider"></div>
+        <div class="price-features">
+          <div class="price-feature"><span class="price-check">✓</span>Everything in Pro</div>
+          <div class="price-feature"><span class="price-check">✓</span>1-on-1 coaching calls</div>
+          <div class="price-feature"><span class="price-check">✓</span>Early feature access</div>
+          <div class="price-feature"><span class="price-check">✓</span>Private mastermind group</div>
+        </div>
+        <button class="btn-plan" onclick="showScreen('screen-checkout')">Go Elite</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNUP PAGE -->
+<div id="screen-signup" class="screen">
+  <nav>
+    <div class="nav-logo">inner<span>circle</span></div>
+    <div class="nav-actions">
+      <button class="btn-ghost" onclick="showScreen('screen-landing')">← Back</button>
+    </div>
+  </nav>
+  <div class="auth-wrap">
+    <div class="auth-logo">inner<span>circle</span></div>
+    <div class="auth-title">Create your account</div>
+    <div class="auth-sub">Free forever. Upgrade anytime.</div>
+    <button class="social-btn">🔵 Continue with Google</button>
+    <div class="divider">or sign up with email</div>
+    <div class="form-group">
+      <label class="form-label">Full name</label>
+      <input class="form-input" type="text" placeholder="Alex Johnson"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email address</label>
+      <input class="form-input" type="email" placeholder="alex@email.com"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-input" type="password" placeholder="Min. 8 characters"/>
+    </div>
+    <button class="btn-submit" onclick="showScreen('screen-dashboard')">Create account →</button>
+    <div class="auth-switch">Already a member? <span class="auth-link" onclick="showScreen('screen-login')">Log in</span></div>
+  </div>
+</div>
+
+<!-- LOGIN PAGE -->
+<div id="screen-login" class="screen">
+  <nav>
+    <div class="nav-logo">inner<span>circle</span></div>
+    <div class="nav-actions">
+      <button class="btn-ghost" onclick="showScreen('screen-landing')">← Back</button>
+    </div>
+  </nav>
+  <div class="auth-wrap">
+    <div class="auth-logo">inner<span>circle</span></div>
+    <div class="auth-title">Welcome back</div>
+    <div class="auth-sub">Sign in to your account</div>
+    <button class="social-btn">🔵 Continue with Google</button>
+    <div class="divider">or sign in with email</div>
+    <div class="form-group">
+      <label class="form-label">Email address</label>
+      <input class="form-input" type="email" placeholder="alex@email.com"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-input" type="password" placeholder="Your password"/>
+    </div>
+    <button class="btn-submit" onclick="showScreen('screen-dashboard')">Sign in →</button>
+    <div class="auth-switch">New here? <span class="auth-link" onclick="showScreen('screen-signup')">Create account</span></div>
+  </div>
+</div>
+
+<!-- CHECKOUT PAGE -->
+<div id="screen-checkout" class="screen">
+  <nav>
+    <div class="nav-logo">inner<span>circle</span></div>
+    <div class="nav-actions">
+      <button class="btn-ghost" onclick="showScreen('screen-pricing')">← Back</button>
+    </div>
+  </nav>
+  <div class="section">
+    <div class="section-tag">Checkout</div>
+    <div class="section-title">You're one step away</div>
+    <div class="checkout-card">
+      <div class="checkout-plan-name">Pro Membership</div>
+      <div class="checkout-price">$29/month</div>
+      <div style="font-size:12px;color:var(--ink3);">Recurring · Cancel anytime</div>
+      <div class="checkout-perks">
+        <div class="checkout-perk">✓ Full access to all 340+ lessons</div>
+        <div class="checkout-perk">✓ Private Discord community</div>
+        <div class="checkout-perk">✓ All templates and resources</div>
+      </div>
+    </div>
+    <div class="checkout-card">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" placeholder="your@email.com"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Card number</label>
+        <input class="form-input" type="text" placeholder="1234 5678 9012 3456"/>
+      </div>
+      <div class="card-row">
+        <div class="form-group">
+          <label class="form-label">Expiry</label>
+          <input class="form-input" type="text" placeholder="MM / YY"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">CVC</label>
+          <input class="form-input" type="text" placeholder="123"/>
+        </div>
+      </div>
+      <button class="btn-submit" onclick="showScreen('screen-dashboard')">Pay $29/month →</button>
+      <div class="stripe-badge">🔒 Secured by Stripe · 256-bit encryption</div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="screen-dashboard" class="screen">
+  <div class="dash-header">
+    <div class="dash-greeting">Good morning, Alex 👋</div>
+    <div class="dash-sub">Continue where you left off</div>
+    <div class="badge-tier">★ PRO MEMBER</div>
+  </div>
+  <div class="dash-stats">
+    <div class="stat-card"><div class="stat-val">12</div><div class="stat-label">Lessons done</div></div>
+    <div class="stat-card"><div class="stat-val">28d</div><div class="stat-label">Member since</div></div>
+    <div class="stat-card"><div class="stat-val">4</div><div class="stat-label">Bookmarked</div></div>
+    <div class="stat-card"><div class="stat-val">2</div><div class="stat-label">Badges earned</div></div>
+  </div>
+  <div style="padding:8px 0 10px;">
+    <div class="dash-section-title">Continue learning</div>
+    <div class="content-list">
+      <div class="content-item">
+        <div class="content-thumb">🎬</div>
+        <div><div class="content-title">Building a scalable offer</div><div class="content-meta">Module 3 · 18 min · 60% done</div></div>
+        <span style="margin-left:auto;color:var(--accent);font-size:12px;font-weight:600;">▶</span>
+      </div>
+      <div class="content-item">
+        <div class="content-thumb">📊</div>
+        <div><div class="content-title">Content strategy masterclass</div><div class="content-meta">Module 4 · 24 min · New</div></div>
+        <span style="margin-left:auto;color:var(--ink3);font-size:12px;">▶</span>
+      </div>
+      <div class="content-item locked">
+        <div class="content-thumb">🔬</div>
+        <div><div class="content-title">Elite growth framework</div><div class="content-meta">Elite only · 31 min</div></div>
+        <span style="margin-left:auto;opacity:0.4;font-size:14px;">🔒</span>
+      </div>
+    </div>
+  </div>
+  <div style="padding:16px 0 80px;">
+    <div class="dash-section-title">Community & tools</div>
+    <div class="content-list">
+      <div class="content-item">
+        <div class="content-thumb">💬</div>
+        <div><div class="content-title">Discord community</div><div class="content-meta">12,400 members · Active now</div></div>
+      </div>
+      <div class="content-item">
+        <div class="content-thumb">📁</div>
+        <div><div class="content-title">Resource library</div><div class="content-meta">Templates & frameworks</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <button class="nav-tab active"><span class="nav-tab-icon">🏠</span><span class="nav-tab-label">Home</span></button>
+    <button class="nav-tab"><span class="nav-tab-icon">🎬</span><span class="nav-tab-label">Library</span></button>
+    <button class="nav-tab"><span class="nav-tab-icon">💬</span><span class="nav-tab-label">Community</span></button>
+    <button class="nav-tab" onclick="showScreen('screen-pricing')"><span class="nav-tab-icon">⚡</span><span class="nav-tab-label">Upgrade</span></button>
+    <button class="nav-tab"><span class="nav-tab-icon">👤</span><span class="nav-tab-label">Profile</span></button>
+  </div>
+</div>
+
+<script>
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+</script>
+</body>
+</html>
